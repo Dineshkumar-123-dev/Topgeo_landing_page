@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -21,35 +21,92 @@ const faqs = [
   }
 ];
 
+const accordionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.5,
+      ease: [0.4, 0, 0.2, 1]
+    }
+  })
+};
+
+const contentVariants = {
+  hidden: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      height: { duration: 0.3 },
+      opacity: { duration: 0.2 }
+    }
+  },
+  visible: {
+    height: "auto",
+    opacity: 1,
+    transition: {
+      height: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
+      opacity: { duration: 0.3, delay: 0.1 }
+    }
+  }
+};
+
 function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null);
+
+  const handleClick = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   return (
     <section className="faq-section" id="faq">
       <div className="container">
-        <div className="faq-header text-center">
+        <motion.div
+          className="faq-header text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="section-title">Frequently Asked <span className="gradient-text">Questions</span></h2>
           <p className="section-subtitle">Learn more about how we generate leads effectively for tech and software companies.</p>
-        </div>
+        </motion.div>
 
         <div className="faq-accordion">
           {faqs.map((faq, i) => (
-            <div key={i} className="accordion-item">
+            <motion.div
+              key={i}
+              className={`accordion-item ${activeIndex === i ? 'active' : ''}`}
+              custom={i}
+              variants={accordionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               <button
                 className={`accordion-header ${activeIndex === i ? 'active' : ''}`}
-                onClick={() => setActiveIndex(activeIndex === i ? null : i)}
+                onClick={() => handleClick(i)}
               >
-                {faq.q}
-                <Plus className={`icon transition-transform ${activeIndex === i ? 'rotate-45' : ''}`} />
+                <span className="accordion-number">{String(i + 1).padStart(2, '0')}</span>
+                <span className="accordion-question">{faq.q}</span>
+                <motion.span
+                  className="accordion-icon"
+                  animate={{ rotate: activeIndex === i ? 180 : 0 }}
+                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </motion.span>
               </button>
-              <AnimatePresence>
+              <AnimatePresence mode="wait">
                 {activeIndex === i && (
                   <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
+                    variants={contentVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    className="accordion-body"
                   >
                     <div className="accordion-content">
                       <p>{faq.a}</p>
@@ -57,7 +114,7 @@ function FAQ() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

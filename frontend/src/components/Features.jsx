@@ -83,7 +83,7 @@ function Features() {
                         </motion.div>
                     ))}
                 </div>
-                <div className="platform-benefits" style={{ marginTop: '100px', borderTop: '1px solid var(--border)', paddingTop: '80px' }}>
+                <div className="platform-benefits">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -94,28 +94,28 @@ function Features() {
                         <p className="section-subtitle">Get cited, get ranked, and get discovered automatically across 10+ engines.</p>
                     </motion.div>
 
-                    <div className="benefit-grid" style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '2rem',
-                        marginTop: '40px'
-                    }}>
-                        <div className="benefit-item">
-                            <h3>Boost your ranking</h3>
-                            <p>Climb to the top of AI search results with data-driven optimization strategies.</p>
-                        </div>
-                        <div className="benefit-item">
-                            <h3>Increase platform mentions</h3>
-                            <p>Get cited more frequently across ChatGPT, Perplexity, and other AI engines.</p>
-                        </div>
-                        <div className="benefit-item">
-                            <h3>Improve Visibility Score</h3>
-                            <p>Track and enhance your overall AI search performance with actionable metrics.</p>
-                        </div>
-                        <div className="benefit-item">
-                            <h3>Amplify AI authority</h3>
-                            <p>Maximize your brand's presence and authority in AI-generated responses.</p>
-                        </div>
+                    <div className="benefit-grid">
+                        {[
+                            { title: "Boost your ranking", desc: "Climb to the top of AI search results with data-driven optimization strategies." },
+                            { title: "Increase platform mentions", desc: "Get cited more frequently across ChatGPT, Perplexity, and other AI engines." },
+                            { title: "Improve Visibility Score", desc: "Track and enhance your overall AI search performance with actionable metrics." },
+                            { title: "Amplify AI authority", desc: "Maximize your brand's presence and authority in AI-generated responses." }
+                        ].map((benefit, i) => (
+                            <motion.div
+                                key={i}
+                                className="benefit-item"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                            >
+                                <div className="benefit-icon">
+                                    <span className="benefit-check">✓</span>
+                                </div>
+                                <h3>{benefit.title}</h3>
+                                <p>{benefit.desc}</p>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </div>

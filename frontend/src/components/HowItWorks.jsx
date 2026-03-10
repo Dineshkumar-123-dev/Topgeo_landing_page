@@ -30,41 +30,34 @@ const steps = [
 
 function HowItWorks() {
     return (
-        <section className="how-it-works" style={{ padding: '100px 0', backgroundColor: '#F8FAFC' }}>
+        <section className="how-it-works">
             <div className="container">
-                <div className="text-center" style={{ marginBottom: '60px' }}>
+                <motion.div
+                    className="text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                >
                     <h2 className="section-title">Get Started in <span className="gradient-text">Minutes</span></h2>
-                    <p className="section-subtitle">Simplified onboardings to start winning in the age of AI search.</p>
-                </div>
+                    <p className="section-subtitle">Simplified onboarding to start winning in the age of AI search.</p>
+                </motion.div>
 
-                <div className="steps-grid" style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                    gap: '2rem'
-                }}>
+                <div className="steps-grid">
                     {steps.map((s, i) => (
                         <motion.div
                             key={i}
-                            style={{ position: 'relative', textAlign: 'center' }}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            className="step-card"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
                         >
-                            <div style={{
-                                fontSize: '4rem',
-                                fontWeight: '800',
-                                color: 'rgba(37, 99, 235, 0.05)',
-                                position: 'absolute',
-                                top: '-20px',
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                zIndex: '-1'
-                            }}>
-                                {s.number}
+                            <div className="step-number">{s.number}</div>
+                            <div className="step-content">
+                                <h3>{s.title}</h3>
+                                <p>{s.desc}</p>
                             </div>
-                            <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', marginTop: '20px', color: '#0F172A' }}>{s.title}</h3>
-                            <p style={{ fontSize: '0.9rem', color: '#64748B' }}>{s.desc}</p>
                         </motion.div>
                     ))}
                 </div>
