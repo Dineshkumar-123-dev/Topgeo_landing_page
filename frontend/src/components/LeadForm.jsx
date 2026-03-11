@@ -8,10 +8,8 @@ function LeadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
 
-  // Replace this URL with your Google Apps Script Web App URL
-  const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbw5Ly1vJv8qXWrG_cIN533F3vbM2RWZLXucE-nbPB-gDACEE8ZNaEpPQdR-9ujL2BAvng/exec";
-
+  // Replace this URL with your Google Apps Script Web App URL in .env
+  const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
